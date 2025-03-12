@@ -2,6 +2,11 @@
 
 This package is a Symfony Bundle that allows to use css module classes or import js-modules in twig templates.
 
+## Purpose
+
+I've been using [css-modules](https://github.com/css-modules/css-modules "css-modules") with a react project for some time and I really liked the idea of having short :class-names without fandy prefixes to keep them unique.  
+With this bundle, you can use css-modules in the twig-templates of your Symfony project.
+
 ## Installation
 
 ```bash
@@ -70,6 +75,44 @@ mak_css_module:
 {# it is also possible to define the module to use as second parameter of the scope function #}
 <a class="{{ scope('button', 'button.module.scss') }}">Click me</a>
 ```
+## Keep everything in one place
+I had the idea for this bundle when I started working on a big project were we used [atomic design](https://atomicdesign.bradfrost.com/chapter-2/ "atomic design") and lots of [Twig-(Live)Components](https://ux.symfony.com/live-component "Twig-(Live)Components").
+When we got started, Twig-Components were pretty new and we had no experience in using those. But we've used react before and we liked the concept of having one directory per component containing the js-file(s) and css-files for that specific component. So when you delete the component you dont have to navigate to some other directory to remove the styles for this component as well.
+
+This is also possible with symfony. Here's an example of how we organized our template-code:
+
+```
+template/
+├─ components/
+│  ├─ atoms/
+│  │  ├─ sample-atom
+│  │  │  ├─ sample-atom.html
+│  │  │  ├─ sample-atom.module.css
+│  │  │  ├─ sample_atom_controller.js
+│  ├─ molecules/
+│  ├─ organisms/
+├─ pages/
+├─ templates/
+```
+
+When you use this bundle, the css files are imported automatically by the importModule-Tag and the TwigLoader for Webpack. 
+You can also use importModule to import a Javascript or Typescript-File.
+
+For Stimulus-Controllers you need to add this snipped to your assets/bootstrap.js
+
+```js
+app.load(
+  definitionsFromContext(
+    require.context(
+      "@symfony/stimulus-bridge/lazy-controller-loader!../templates",
+      true,
+      /\.[jt]sx?$/
+    )
+  )
+);
+```
+
+This tells webpack to scan the templates-folder for stimulus-controllers and bundle them into the resulting javascript file.
 
 ## Internals
 
