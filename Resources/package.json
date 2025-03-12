@@ -1,0 +1,19 @@
+{
+  "name": "mak-css-module",
+  "version": "1.0.0",
+  "description": "Use CSS-Modules with Symfony and Twig",
+  "keywords": [
+    "symfony",
+    "twig",
+    "css-modules"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Matthias Krauser",
+    "url": "https://github.com/mkrauser/css-module-bundle"
+  },
+  "files": [
+    "webpack/TwigLoader.js"
+  ],
+  "types": "ts/router.d.ts"
+}

@@ -1,0 +1,14 @@
+parameters:
+    level: 7
+    paths:
+        - DependencyInjection
+        - Exception
+        - Resources/config
+        - Twig
+        - MaKCssModuleBundle.php
+    ignoreErrors:
+        - '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\:\:scalarNode\(\).$#'
+    parallel:
+        processTimeout: 300.0
+        maximumNumberOfProcesses: 4
+    reportUnmatchedIgnoredErrors: false

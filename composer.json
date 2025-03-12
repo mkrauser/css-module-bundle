@@ -1,0 +1,32 @@
+{
+  "name": "mak/css-module-bundle",
+  "type": "symfony-bundle",
+  "description": "A Symfony bundle to use css-modules with twig and webpack encore",
+  "keywords": ["twig", "css-modules", "bundle"],
+  "homepage": "https://twig.symfony.com",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Matthias Krauser",
+      "email": "matthias@krauser.eu"
+    }
+  ],
+  "require": {
+    "php": ">=8.2",
+    "symfony/config": "^6.4|^7.0",
+    "symfony/framework-bundle": "^6.4|^7.0",
+    "symfony/twig-bundle": "^6.4|^7.0",
+    "twig/twig": "^3.12"
+  },
+  "require-dev": {
+    "rector/rector": "^2.0",
+    "phpstan/phpstan": "^2.1"
+  },
+  "autoload": {
+    "psr-4" : { "MaK\\CssModuleBundle\\" : "." },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  }
+}
