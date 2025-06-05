@@ -4,7 +4,11 @@ parameters:
         - DependencyInjection
         - Exception
         - Resources/config
-        - Twig
+        - Extension
+        - Node
+        - NodeVisitor
+        - Tests
+        - TokenParser
         - MaKCssModuleBundle.php
     ignoreErrors:
         - '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface\:\:scalarNode\(\).$#'

@@ -1,10 +1,10 @@
 <?php
 
-namespace MaK\CssModuleBundle\Twig;
+namespace MaK\CssModuleBundle\Extension;
 
+use MaK\CssModuleBundle\NodeVisitor\CssScopeNodeVisitor;
+use MaK\CssModuleBundle\TokenParser\ImportModuleTokenParser;
 use RuntimeException;
-use MaK\CssModuleBundle\Twig\NodeVisitor\CssScopeNodeVisitor;
-use MaK\CssModuleBundle\Twig\TokenParser\ImportModuleTokenParser;
 use Twig\Extension\AbstractExtension;
 use Twig\TokenParser\TokenParserInterface;
 use Twig\TwigFunction;
@@ -21,7 +21,7 @@ final class CssModuleExtension extends AbstractExtension
 
     public function __construct(
         private readonly string $projectDir,
-        private string $localIdentName = '_[hash:base64:5]',
+        private string $localIdentName = '[hash:base64:5]',
         private readonly ?string $localIdentHashSalt = null
     ) {
         preg_match("/\[(?:([^:\]]+):)?(?:(hash|contenthash|fullhash))(?::([a-z]+\d*))?(?::(\d+))?\]/i", $this->localIdentName, $matches);
@@ -31,7 +31,7 @@ final class CssModuleExtension extends AbstractExtension
         }
 
         $this->hashName = $matches[2] ?? 'hash';
-        $this->hashFunction = $matches[1] ?? 'md4';
+        $this->hashFunction = $matches[1] === "" ? 'md4' : $matches[1];
         $this->hashDigest = $matches[3] ?? 'base64';
         $this->hashDigestLength = isset($matches[4]) ? intval($matches[4]) : 5;
 
@@ -70,9 +70,22 @@ final class CssModuleExtension extends AbstractExtension
         ];
     }
 
-    public function cssScope(string $scope, string $modulePath): string
+    /** @param string|string[] $scopes */
+    public function cssScope(array|string $scopes, string $modulePath): string
     {
-        return $this->hash($modulePath, $scope);
+        if (!is_array($scopes)) {
+            $scopes = [$scopes];
+        }
+
+        $hashedScopes = [];
+        foreach ($scopes as $scope) {
+            // @phpstan-ignore-next-line
+            if (!is_string($scope)) {
+                throw new RuntimeException('Scope must be a string');
+            }
+            $hashedScopes[] = $this->hash($modulePath, $scope);
+        }
+        return implode(' ', $hashedScopes);
     }
 
     private function hash(string $relativeModulePath, string $scope): string

@@ -1,8 +1,8 @@
 <?php
 
-namespace MaK\CssModuleBundle\Twig\NodeVisitor;
+namespace MaK\CssModuleBundle\NodeVisitor;
 
-use MaK\CssModuleBundle\Twig\Node\ImportModuleNode;
+use MaK\CssModuleBundle\Node\ImportModuleNode;
 use RuntimeException;
 use Twig\Environment;
 use Twig\Node\BlockNode;

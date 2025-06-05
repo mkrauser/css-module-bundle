@@ -1,6 +1,6 @@
 <?php
 
-namespace MaK\CssModuleBundle\Twig\Node;
+namespace MaK\CssModuleBundle\Node;
 
 use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;

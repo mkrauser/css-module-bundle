@@ -1,9 +1,8 @@
 <?php
 
-namespace MaK\CssModuleBundle\Twig\TokenParser;
+namespace MaK\CssModuleBundle\TokenParser;
 
-use MaK\CssModuleBundle\Twig\Node\CssModuleNode;
-use MaK\CssModuleBundle\Twig\Node\ImportModuleNode;
+use MaK\CssModuleBundle\Node\ImportModuleNode;
 use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;
@@ -12,7 +11,7 @@ final class ImportModuleTokenParser extends AbstractTokenParser
 {
     public function parse(Token $token): Node
     {
-        $expr = $this->parser->getExpressionParser()->parseExpression();
+        $expr = $this->parser->parseExpression();
 
         $this->parser->getStream()->expect(Token::BLOCK_END_TYPE);
 

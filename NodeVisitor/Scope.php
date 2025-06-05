@@ -1,9 +1,8 @@
 <?php
 
-namespace MaK\CssModuleBundle\Twig\NodeVisitor;
+namespace MaK\CssModuleBundle\NodeVisitor;
 
 use LogicException;
-
 use function array_key_exists;
 
 /**

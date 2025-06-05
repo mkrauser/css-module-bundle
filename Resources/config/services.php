@@ -2,7 +2,7 @@
 
 namespace MaK\CssModuleBundle\Component\DependencyInjection\Loader\Configurator;
 
-use MaK\CssModuleBundle\Twig\CssModuleExtension;
+use MaK\CssModuleBundle\Extension\CssModuleExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
