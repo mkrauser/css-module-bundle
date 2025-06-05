@@ -21,12 +21,16 @@
   },
   "require-dev": {
     "rector/rector": "^2.0",
-    "phpstan/phpstan": "^2.1"
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^12.2@dev"
   },
   "autoload": {
     "psr-4" : { "MaK\\CssModuleBundle\\" : "." },
     "exclude-from-classmap": [
       "/Tests/"
     ]
+  },
+  "conflicts": {
+    "sensiolabs/storybook-bundle": "*"
   }
 }
