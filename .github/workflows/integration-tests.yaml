@@ -1,0 +1,64 @@
+name: PHPUnit
+on:
+  pull_request:
+    branches-ignore:
+      - 'rectified/**'
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Integration
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: "none"
+          ini-values: date.timezone=UTC,memory_limit=-1,default_socket_timeout=10,session.gc_probability=0,apc.enable_cli=1,zend.assertions=1
+          php-version: "${{ matrix.php }}"
+          tools: pecl
+
+      - name: Display versions
+        run: |
+          php -r 'foreach (get_loaded_extensions() as $extension) echo $extension . " " . phpversion($extension) . PHP_EOL;'
+          php -i
+
+      - name: Install dependencies
+        run: |
+          COMPOSER_HOME="$(composer config home)"
+          ([ -d "$COMPOSER_HOME" ] || mkdir "$COMPOSER_HOME") && cp .github/composer-config.json "$COMPOSER_HOME/config.json"
+          export COMPOSER_ROOT_VERSION=$(grep ' VERSION = ' src/Symfony/Component/HttpKernel/Kernel.php | grep -P -o '[0-9]+\.[0-9]+').x-dev
+          echo COMPOSER_ROOT_VERSION=$COMPOSER_ROOT_VERSION >> $GITHUB_ENV
+
+          echo "::group::composer update"
+          composer update --no-progress --ansi
+          echo "::endgroup::"
+
+          echo "::group::install phpunit"
+          ./phpunit install
+          echo "::endgroup::"
+
+      - name: Run tests
+        run: ./phpunit -v
+        env:
+          export BRANCH=$(jq --raw-output .pull_request.head.ref "$GITHUB_EVENT_PATH")
+          echo "::set-output name=branch::$BRANCH"
+          
+          export TITLE=$(jq --raw-output .pull_request.title "$GITHUB_EVENT_PATH")
+          echo "::set-output name=title::$TITLE"
