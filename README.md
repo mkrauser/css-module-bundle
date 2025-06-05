@@ -1,28 +1,64 @@
-# CssModuleBundle-bundle [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Use%20CSS%20Modules%20with%20Symfony&url=https://github.com/mkrauser/css-module-bundle&hashtags=css-modules-bundle)
+# CssModuleBundle [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Use%20CSS%20Modules%20with%20Symfony&url=https://github.com/mkrauser/css-module-bundle&hashtags=css-modules-bundle)
 
-This package is a Symfony Bundle that allows to use css module classes or import js-modules in twig templates.
+**CssModuleBundle** is a Symfony bundle that enables the use of CSS Modules and JavaScript module imports directly 
+within Twig templates.
 
-## Purpose
+### Sample:
+```css
+/* button.module.scss */
+.button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+```
+```twig
+{# Import the CSS module defined above #}
+{% importModule 'button.module.scss' %}
 
-I've been using [css-modules](https://github.com/css-modules/css-modules "css-modules") with a react project for some time and I really liked the idea of having short :class-names without fandy prefixes to keep them unique.  
-With this bundle, you can use css-modules in the twig-templates of your Symfony project.
+{# Use a scoped class from the imported module by string #}
+<a class="{{ scope('button') }}">Click me</a>
 
-## Installation
+{# ...or by array #}
+<a class="{{ scope(['button', 'button2']) }}">Click me</a>
+```
+
+## 🎯 Purpose
+
+CSS Modules bring scoped class names to CSS, avoiding naming collisions and promoting modular architecture. 
+This bundle brings the same benefits to Symfony + Twig.
+
+If you're familiar with [CSS Modules](https://github.com/css-modules/css-modules), particularly in React, 
+you'll appreciate the ability to:
+- Use short, unique class names without global conflicts.
+- Keep styles encapsulated at the component level.
+- Apply the same development patterns in Symfony projects with Twig.
+
+---
+
+## 📦 Installation
 
 ```bash
 composer require mak/css-module-bundle
 ```
 
-Configure Css-Modules with webpack encore
+---
+
+## ⚙️ Configuration
+
+### Webpack Encore Setup
+
+In your `webpack.config.js`:
+
 ```js
 Encore
     // ...
-    // add all twig files to the app-entry-point
     .addEntry('app', [
         './assets/app.js',
-        ...glob.sync(["./templates/**/*.html.twig"]), /// also
+        ...glob.sync(["./templates/**/*.html.twig"]),
     ])
-    // add loader for twig-files
     .addLoader({
         test: /\.twig$/,
         use: [
@@ -34,73 +70,73 @@ Encore
             },
         ],
     })
-    // configure webpack to use css modules 
     .configureCssLoader((options) => {
         options.modules = {
-            auto: (resourcePath) => {
-                return /\.module\.\w+$/i.test(resourcePath);
-            },
+            auto: (resourcePath) => /\.module\.\w+$/i.test(resourcePath),
             localIdentName: "[hash:base64:5]",
         };
     })
-    // ...
 ```
 
-Configuration:
+### Symfony Bundle Configuration
+
 ```yaml
+# config/packages/mak_css_module.yaml
 mak_css_module:
-    # see https://webpack.js.org/loaders/css-loader/#localidentname
-    localIdentName:         '[hash:base64]'
-    # see https://webpack.js.org/loaders/css-loader/#localidentcontext
-    # this is required to calculate the hash, most likely you don't need to change this
-    localIdentContext:      '%kernel.project_dir%'
-    # see https://webpack.js.org/loaders/css-loader/#localidenthashsalt
-    localIdentHashSalt:     null
+    localIdentName: '[hash:base64]'
+    localIdentContext: '%kernel.project_dir%'
+    localIdentHashSalt: null
 ```
---------------
 
+---
 
-## Usage
+## 🚀 Usage in Twig
 
 ```twig
-{# 
-    this imports the file button.module.scss as css module
-    Note that this only influences the current template, not any "included" template (in order to avoid side effects).
-#}
-{% import_module 'button.module.scss' %}
+{# Import CSS module into the current template context #}
+{% importModule 'button.module.scss' %}
 
-{# to scope a css-class, use the scope-function like this #}
+{# Apply a scoped class from the imported module #}
 <a class="{{ scope('button') }}">Click me</a>
 
-{# it is also possible to define the module to use as second parameter of the scope function #}
+{# Alternatively, specify the module explicitly #}
 <a class="{{ scope('button', 'button.module.scss') }}">Click me</a>
 ```
-## Keep everything in one place
-I had the idea for this bundle when I started working on a big project were we used [atomic design](https://atomicdesign.bradfrost.com/chapter-2/ "atomic design") and lots of [Twig-(Live)Components](https://ux.symfony.com/live-component "Twig-(Live)Components").
-When we got started, Twig-Components were pretty new and we had no experience in using those. But we've used react before and we liked the concept of having one directory per component containing the js-file(s) and css-files for that specific component. So when you delete the component you dont have to navigate to some other directory to remove the styles for this component as well.
 
-This is also possible with symfony. Here's an example of how we organized our template-code:
+> > **⚠️ Note:**  
+> Imported modules only apply to the current template to prevent unintended side effects in included templates.
+
+---
+
+## 🧱 Component-First Folder Structure
+
+Inspired by Atomic Design and modern component-based development, you can colocate templates, styles, 
+and JavaScript files:
 
 ```
-template/
+templates/
 ├─ components/
 │  ├─ atoms/
-│  │  ├─ sample-atom
-│  │  │  ├─ sample-atom.html
+│  │  ├─ sample-atom/
+│  │  │  ├─ sample-atom.html.twig
 │  │  │  ├─ sample-atom.module.css
 │  │  │  ├─ sample_atom_controller.js
 │  ├─ molecules/
 │  ├─ organisms/
 ├─ pages/
-├─ templates/
+├─ base/
 ```
 
-When you use this bundle, the css files are imported automatically by the importModule-Tag and the TwigLoader for Webpack. 
-You can also use importModule to import a Javascript or Typescript-File.
+With `importModule`, CSS and JS are automatically bundled for each component.
 
-For Stimulus-Controllers you need to add this snipped to your assets/bootstrap.js
+---
+
+## ⚡ Stimulus Integration
+
+To enable autoloading of Stimulus controllers in your templates:
 
 ```js
+// assets/bootstrap.js
 app.load(
   definitionsFromContext(
     require.context(
@@ -112,110 +148,100 @@ app.load(
 );
 ```
 
-This tells webpack to scan the templates-folder for stimulus-controllers and bundle them into the resulting javascript file.
+This allows Webpack to bundle Stimulus controllers alongside your Twig templates.
 
-## Internals
+---
 
-Internally the bundle works just like css-modules in js. Event the code is ported from webpacks css-loader. 
-The importModule-Node sets the module for all scope-functions within the current template. 
-Included Templates are not affected to avoid side effects.
+## 🔍 Internals
 
-The scope-Function then calculates the hash-value for the respective css class. The Hash-Calculation happens 
-during twig compile time, so there's no performance impact.
+- The bundle mimics Webpack’s `css-loader` functionality to hash class names.
+- `importModule` registers the module within a template.
+- `scope()` computes the hashed class name at **compile time**.
+- Included templates are isolated to prevent shared scope.
 
-Attention: 
-The string-parameter provided to the scope-function is not checked in any way. 
-This is outside the scope of this bundle.
+> **⚠️ Note:**  
+> `scope()` accepts raw string input for class names. Input validation is out of scope.
 
-## Frequently Asked Questions
+---
 
-- [How to use Twig Css Modules with PurifyCSS, UnCSS or PurgeCSS](#css-minifiers)
-- [Is there a performance impact](#performance)
-- [How to use sass/less](#sass-less)
-- [How to use global vars / functions in css modules](#vars-functions-in-modules)
+## ❓ Frequently Asked Questions
 
-### How to use Twig Css Modules with PurifyCSS, UnCSS or PurgeCSS?
+### How to use Twig CSS Modules with PurifyCSS, UnCSS, or PurgeCSS?
 
-CSS-Cleanup tools like PurifyCSS, UnCSS or PurgeCSS analyze the twig-templates and js-code and then remove all unused
-css selectors. Since the calculated hashes are not present in js or twig templates, these tools would remove the
-hashed css classes.
+These tools remove unused CSS by scanning for class names. Since CSS module hashes aren't explicitly written in 
+Twig/JS, you must:
 
-It is possible to get arount that by using a fixed prefix for your css-modules.
-You need to change the localIdentName in the encore- and bundle configuration:
+1. Add a prefix to all CSS module hashes:
 
 ```yaml
 mak_css_module:
-  # here a undercores "_" is used to prefix all css-module hashes
-  # this needs to be configured in the encore-config as well
-  localIdentName:         '_[hash:base64]'
+  localIdentName: '_[hash:base64]'
 ```
 
-Then you need to whitelist all css-classes starting with that prefix in your CSS-Cleanup tool. For PurgeCSS that can
-be done like this:
+2. Update your Encore config similarly.
+
+3. Safelist the prefix in PurgeCSS:
 
 ```js
-Encore
-  // ...
-  .addPlugin(
-    new PurgeCSSPlugin({
-        paths: glob.sync(
-            [
-                `${PATHS.templates}/**/*.html.twig`,
-                `${PATHS.assets}/**/*.{js,ts}`,
-                `${PATHS.modules}/bootstrap5/js/src/**/*`,
-            ],
-            { nodir: true }
-        ),
-        safelist: {
-            deep: [
-                /^_/, // the prefix is defined here
-            ],
+new PurgeCSSPlugin({
+    paths: glob.sync([
+        `${PATHS.templates}/**/*.html.twig`,
+        `${PATHS.assets}/**/*.{js,ts}`,
+    ], { nodir: true }),
+    safelist: {
+        deep: [/^_/],
+    },
+    extractors: [
+        {
+            extractor: purgeHtml,
+            extensions: ["html", "twig"],
         },
-        extractors: [
-            {
-                extractor: purgeHtml,
-                extensions: ["html", "twig"],
-            },
-        ],
-    })
-)
+    ],
+})
 ```
+
+---
 
 ### Is there a performance impact?
 
-Since the hashing happens at twig compile time, there is no performance impact once the templates are compiled.
-Since the length of hashed css classes is usually smaller than that of conventional classes, 
-there is even a very small performance gain.
+No. All hashing is done at Twig **compile time**, so runtime performance is unaffected. In fact, shorter hashed 
+class names may slightly improve render efficiency.
 
-### How to use sass/less or other preprocessors?
+---
 
-When using SASS or LESS there is no difference to normal CSS. Please check the documentation of your respective 
-preprocessor on how to use css modules.
+### How to use SASS, LESS, or other preprocessors?
 
-### How to use global vars / functions in css modules
+No additional setup is needed. Just use `.module.scss` or `.module.less` as usual. Webpack will handle them 
+according to your preprocessor loader configuration.
 
-By default you cannot use any vars / functions / mixins in modules if these are defined in global stylesheets. 
-For SCSS this can be configured like this:
+---
+
+### Can I use global variables or mixins in CSS Modules?
+
+Yes, using [`sass-resources-loader`](https://github.com/shakacode/sass-resources-loader):
 
 ```js
 Encore
-    // ...
     .configureLoaderRule("scss", (loaderRule) => {
         loaderRule.oneOf.forEach((rule) => {
             rule.use.push({
                 loader: "sass-resources-loader",
                 options: {
                     resources: [
-                        // make bootstrap mixins available in twig css-modules
-                        path.resolve(
-                            __dirname,
-                            "./node_modules/bootstrap5/scss/_mixins.scss" 
-                        ),
-                        // make global vars/functions/mixins available as well
-                        path.resolve(__dirname, "./assets/scss/global.scss")
+                        path.resolve(__dirname, "./node_modules/bootstrap5/scss/_mixins.scss"),
+                        path.resolve(__dirname, "./assets/scss/global.scss"),
                     ],
                 },
             });
         });
-    })
+    });
 ```
+
+This will inject shared mixins and variables into every `.module.scss` file.
+
+---
+
+## 🙌 Contributing & Feedback
+
+Pull requests are welcome! If you find bugs or have feature suggestions, feel free to open an issue or tweet about it 
+using [#css-modules-bundle](https://twitter.com/intent/tweet?hashtags=css-modules-bundle).
