@@ -83,8 +83,10 @@ final class CssModuleExtension extends AbstractExtension
             if (!is_string($scope)) {
                 throw new RuntimeException('Scope must be a string');
             }
+
             $hashedScopes[] = $this->hash($modulePath, $scope);
         }
+
         return implode(' ', $hashedScopes);
     }
 

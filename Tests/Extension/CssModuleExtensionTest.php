@@ -20,7 +20,7 @@ class CssModuleExtensionTest extends TestCase
         ]);
         $twig->addExtension($extension);
 
-        $this->assertEquals('AB', $twig->render('template'));
+        $this->assertSame('AB', $twig->render('template'));
     }
 
     /** @param string|string[] $css */
@@ -30,6 +30,6 @@ class CssModuleExtensionTest extends TestCase
     {
         $extension = new CssModuleExtension(__DIR__);
 
-        $this->assertEquals($expectedHashes, $extension->cssScope($css, __DIR__));
+        $this->assertSame($expectedHashes, $extension->cssScope($css, __DIR__));
     }
 }

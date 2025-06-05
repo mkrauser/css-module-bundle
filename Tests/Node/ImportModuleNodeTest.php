@@ -21,6 +21,6 @@ class ImportModuleNodeTest extends TestCase
         $env = new Environment($this->createMock(LoaderInterface::class), ['strict_variables' => true]);
         $compiler = new Compiler($env);
 
-        $this->assertEquals('', trim($compiler->compile($node)->getSource()));
+        $this->assertSame('', trim($compiler->compile($node)->getSource()));
     }
 }

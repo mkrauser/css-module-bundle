@@ -10,8 +10,12 @@ return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/DependencyInjection',
         __DIR__.'/Exception',
+        __DIR__.'/Extension',
+        __DIR__.'/Node',
+        __DIR__.'/NodeVisitor',
         __DIR__.'/Resources/config',
-        __DIR__.'/Twig',
+        __DIR__.'/Tests',
+        __DIR__.'/TokenParser',
     ])
     ->withPhpSets(php82: true)
     ->withPreparedSets(
