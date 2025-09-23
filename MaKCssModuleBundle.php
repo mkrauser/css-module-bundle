@@ -11,7 +11,7 @@ namespace MaK\CssModuleBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MakCssModuleBundle extends Bundle
+class MaKCssModuleBundle extends Bundle
 {
 
 }
