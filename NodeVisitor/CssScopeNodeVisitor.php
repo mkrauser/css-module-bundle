@@ -9,7 +9,7 @@
 
 namespace Mak\CssModuleBundle\NodeVisitor;
 
-use MaK\CssModuleBundle\Node\ImportModuleNode;
+use Mak\CssModuleBundle\Node\ImportModuleNode;
 use RuntimeException;
 use Twig\Environment;
 use Twig\Node\BlockNode;

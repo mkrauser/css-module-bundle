@@ -9,7 +9,7 @@
 
 namespace Mak\CssModuleBundle\Tests\Node;
 
-use MaK\CssModuleBundle\Node\ImportModuleNode;
+use Mak\CssModuleBundle\Node\ImportModuleNode;
 use PHPUnit\Framework\TestCase;
 use Twig\Compiler;
 use Twig\Environment;

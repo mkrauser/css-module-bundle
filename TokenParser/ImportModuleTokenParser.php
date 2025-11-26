@@ -9,7 +9,7 @@
 
 namespace Mak\CssModuleBundle\TokenParser;
 
-use MaK\CssModuleBundle\Node\ImportModuleNode;
+use Mak\CssModuleBundle\Node\ImportModuleNode;
 use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\AbstractTokenParser;

@@ -2,7 +2,7 @@
 
 namespace Mak\CssModuleBundle\Component\DependencyInjection\Loader\Configurator;
 
-use MaK\CssModuleBundle\Extension\CssModuleExtension;
+use Mak\CssModuleBundle\Extension\CssModuleExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 

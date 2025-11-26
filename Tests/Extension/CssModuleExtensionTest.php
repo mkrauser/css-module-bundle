@@ -9,7 +9,7 @@
 
 namespace Mak\CssModuleBundle\Tests\Extension;
 
-use MaK\CssModuleBundle\Extension\CssModuleExtension;
+use Mak\CssModuleBundle\Extension\CssModuleExtension;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;

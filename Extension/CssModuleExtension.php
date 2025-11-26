@@ -9,8 +9,8 @@
 
 namespace Mak\CssModuleBundle\Extension;
 
-use MaK\CssModuleBundle\NodeVisitor\CssScopeNodeVisitor;
-use MaK\CssModuleBundle\TokenParser\ImportModuleTokenParser;
+use Mak\CssModuleBundle\NodeVisitor\CssScopeNodeVisitor;
+use Mak\CssModuleBundle\TokenParser\ImportModuleTokenParser;
 use RuntimeException;
 use Twig\Extension\AbstractExtension;
 use Twig\TokenParser\TokenParserInterface;

@@ -10,7 +10,7 @@
 namespace Mak\CssModuleBundle\Tests\NodeVisitor;
 
 use PHPUnit\Framework\TestCase;
-use MaK\CssModuleBundle\NodeVisitor\Scope;
+use Mak\CssModuleBundle\NodeVisitor\Scope;
 
 class ScopeTest extends TestCase
 {
