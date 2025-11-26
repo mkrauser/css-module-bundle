@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle\Extension;
+namespace Mak\CssModuleBundle\Extension;
 
 use MaK\CssModuleBundle\NodeVisitor\CssScopeNodeVisitor;
 use MaK\CssModuleBundle\TokenParser\ImportModuleTokenParser;

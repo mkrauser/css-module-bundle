@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle\Tests\Extension;
+namespace Mak\CssModuleBundle\Tests\Extension;
 
 use MaK\CssModuleBundle\Extension\CssModuleExtension;
 use PHPUnit\Framework\Attributes\TestWith;

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle\Exception;
+namespace Mak\CssModuleBundle\Exception;
 
 use RuntimeException;
 

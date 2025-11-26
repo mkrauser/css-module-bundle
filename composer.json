@@ -25,7 +25,7 @@
     "phpunit/phpunit": "^12.2@dev"
   },
   "autoload": {
-    "psr-4" : { "MaK\\CssModuleBundle\\" : "." },
+    "psr-4" : { "Mak\\CssModuleBundle\\" : "." },
     "exclude-from-classmap": [
       "/Tests/"
     ]

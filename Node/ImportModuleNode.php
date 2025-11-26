@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle\Node;
+namespace Mak\CssModuleBundle\Node;
 
 use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;

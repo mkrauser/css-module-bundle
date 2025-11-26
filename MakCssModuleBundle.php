@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle;
+namespace Mak\CssModuleBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MaKCssModuleBundle extends Bundle
+class MakCssModuleBundle extends Bundle
 {
 
 }

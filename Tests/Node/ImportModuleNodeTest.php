@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle\Tests\Node;
+namespace Mak\CssModuleBundle\Tests\Node;
 
 use MaK\CssModuleBundle\Node\ImportModuleNode;
 use PHPUnit\Framework\TestCase;

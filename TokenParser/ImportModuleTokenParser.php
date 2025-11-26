@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle\TokenParser;
+namespace Mak\CssModuleBundle\TokenParser;
 
 use MaK\CssModuleBundle\Node\ImportModuleNode;
 use Twig\Node\Node;

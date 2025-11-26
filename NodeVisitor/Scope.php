@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle\NodeVisitor;
+namespace Mak\CssModuleBundle\NodeVisitor;
 
 use LogicException;
 use function array_key_exists;

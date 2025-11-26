@@ -1,6 +1,6 @@
 <?php
 
-namespace MaK\CssModuleBundle\Component\DependencyInjection\Loader\Configurator;
+namespace Mak\CssModuleBundle\Component\DependencyInjection\Loader\Configurator;
 
 use MaK\CssModuleBundle\Extension\CssModuleExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;

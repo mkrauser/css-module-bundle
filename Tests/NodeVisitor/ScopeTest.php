@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace MaK\CssModuleBundle\Tests\NodeVisitor;
+namespace Mak\CssModuleBundle\Tests\NodeVisitor;
 
 use PHPUnit\Framework\TestCase;
 use MaK\CssModuleBundle\NodeVisitor\Scope;
