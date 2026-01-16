@@ -53,6 +53,8 @@ composer require mak/css-module-bundle
 In your `webpack.config.js`:
 
 ```js
+const glob = require("glob-all");
+
 Encore
     // ...
     .addEntry('app', [
@@ -137,6 +139,8 @@ To enable autoloading of Stimulus controllers in your templates:
 
 ```js
 // assets/bootstrap.js
+import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers";
+...
 app.load(
   definitionsFromContext(
     require.context(
